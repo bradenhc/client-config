@@ -1,0 +1,23 @@
+{
+  "name": "client-config",
+  "version": "1.0.0",
+  "description": "Client configuration library for single-page web applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradenhc/client-config.git"
+  },
+  "keywords": [
+    "react",
+    "config"
+  ],
+  "author": "Braden Hitchcock <developer.hitchcock@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradenhc/client-config/issues"
+  },
+  "homepage": "https://github.com/bradenhc/client-config#readme"
+}
