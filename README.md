@@ -37,7 +37,7 @@ config.load(err => {
     let host = config.get('datbase.host');
 
     // Return undefined
-    let doesNotExit = config.get('foo.bar.baz');
+    let doesNotExist = config.get('foo.bar.baz');
 
     // Sets a new key/value pair
     config.set('new.key', 42);
@@ -50,3 +50,20 @@ config.load(err => {
 Once the configuration has been loaded, the `ClientConfig.loaded` flag will be set to `true`. You can use this to check for loaded configuration so you don't have to make unneccessary calls back to the server. Ideally, you should only call `load()` once while bootstraping the web application. Configuration will be available throughout the rest of the app without needed to call `load()` again.
 
 The configuration library supports nested member access. When using `get()`, nested values can be retrieved by a period-delimited string of the keys. Setting nested values can be achieved in the same way. If a nested key does not exist, the library will create an empty object to hold the new key, automatically generating the nested structure.
+
+## Config Files
+
+The library uses the array set at `ClientConfig.files` to fetch configuration for the application. By default, only one entry exists in the array: `/assets/config/default.json`. More entries can be added to the array using the `push()` function, or the array can be reassigned.
+
+```js
+// Set the files to use when loading configuration
+ClientConfig.files = [
+    "/assets/config/production.json",
+    "/assets/config/security.json"
+];
+
+// Add another file
+ClientConfig.files.push("/assets/config/test.json");
+```
+
+These files will be fetched when `load()` is called.
