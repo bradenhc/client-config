@@ -2,12 +2,15 @@ class ClientConfig {
     constructor() {
         this._config = {};
         this.loaded = false;
+        this._files = [
+            "/assets/config/default.json"
+        ];
     }
 
     load(cb) {
         let pending = 0;
         let called = false;
-        ClientConfig.files.forEach(file => {
+        this._files.forEach(file => {
             pending++;
             fetch(file)
                 .then(res => res.json())
@@ -26,6 +29,17 @@ class ClientConfig {
                     }
                 });
         });
+    }
+
+    files(files){
+        if(!files){
+            return this._files;
+        } else {
+            if(!typeof files === 'array'){
+                throw new Error('Cannot set files for configuration: files must be an array of strings');
+            }
+            this._files = files;
+        }
     }
 
     get(key) {
@@ -68,8 +82,6 @@ class ClientConfig {
         }
     }
 }
-
-ClientConfig.files = ['/assets/config/default.json'];
 
 const config = new ClientConfig();
 
