@@ -1,8 +1,8 @@
 # client-config
-Client-side configuration library for single-page web applications
+In-memory client configuration library for single-page web applications
 
 ```
-npm install client-config
+npm install @bradenhc/client-config
 ```
 
 ## Usage
