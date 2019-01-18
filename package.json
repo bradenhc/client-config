@@ -1,10 +1,10 @@
 {
   "name": "@bradenhc/client-config",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "In-memory client configuration library for single-page web applications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/bradenhc/client-config/issues"
   },
-  "homepage": "https://github.com/bradenhc/client-config#readme"
+  "homepage": "https://github.com/bradenhc/client-config#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "karma": "^3.1.4",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^5.2.0"
+  }
 }

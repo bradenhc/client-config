@@ -26,7 +26,6 @@ export class ClientConfig {
     }
 
     load(cb) {
-        let pending = 0;
         let called = false;
         let pending = this._files.length;
         this._files.forEach(file => {
