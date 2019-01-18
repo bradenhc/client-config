@@ -53,7 +53,10 @@ The configuration library supports nested member access. When using `get()`, nes
 
 ## Config Files
 
-The library uses the array set at `ClientConfig.files` to fetch configuration for the application. By default, only one entry exists in the array: `/assets/config/default.json`. More entries can be added to the array using the `push()` function, or the array can be reassigned.
+The library uses the array set at `ClientConfig.files` to fetch configuration for the application. By default, only two entries exists in the array:
+- `/assets/config/default.json`
+- `/assets/config/local.json` 
+More entries can be added to the array using the `push()` function, or the array can be reassigned.
 
 ```js
 import config from 'client-config';

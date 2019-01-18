@@ -1,9 +1,10 @@
-class ClientConfig {
+export class ClientConfig {
     constructor() {
         this._config = {};
         this.loaded = false;
         this._files = [
-            "/assets/config/default.json"
+            "/assets/config/default.json",
+            "/assets/config/local.json"
         ];
     }
 
