@@ -1,6 +1,6 @@
 {
   "name": "@bradenhc/client-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "In-memory client configuration library for single-page web applications",
   "main": "index.js",
   "scripts": {

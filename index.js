@@ -1,3 +1,23 @@
+function isObject(item) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+function mergeDeep(target, ...sources) {
+    if (!sources.length) return target;
+    const source = sources.shift();
+
+    if (isObject(target) && isObject(source)) {
+        for (const key in source) {
+            if (isObject(source[key])) {
+                if (!target[key]) Object.assign(target, { [key]: {} });
+                mergeDeep(target[key], source[key]);
+            } else {
+                Object.assign(target, { [key]: source[key] });
+            }
+        }
+    }
+    return mergeDeep(target, ...sources);
+}
 export class ClientConfig {
     constructor() {
         this._config = {};
@@ -8,12 +28,12 @@ export class ClientConfig {
     load(cb) {
         let pending = 0;
         let called = false;
+        let pending = this._files.length;
         this._files.forEach(file => {
-            pending++;
             fetch(file)
                 .then(res => res.json())
                 .then(data => {
-                    this._config = data;
+                    this._config = mergeDeep(this._config, data);
                     this.loaded = true;
                     if (!--pending && !called) {
                         called = true;
