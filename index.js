@@ -2,10 +2,7 @@ export class ClientConfig {
     constructor() {
         this._config = {};
         this.loaded = false;
-        this._files = [
-            "/assets/config/default.json",
-            "/assets/config/local.json"
-        ];
+        this._files = [];
     }
 
     load(cb) {
@@ -32,12 +29,17 @@ export class ClientConfig {
         });
     }
 
-    files(files){
-        if(!files){
+    files(files) {
+        if (!files) {
             return this._files;
         } else {
-            if(!typeof files === 'array'){
+            if (!typeof files === 'array') {
                 throw new Error('Cannot set files for configuration: files must be an array of strings');
+            }
+            if (files.length === 0 || !typeof files[0] === 'string') {
+                throw new Error(
+                    'Cannot set files for configuration: array must have at least one value and can only contain strings'
+                );
             }
             this._files = files;
         }

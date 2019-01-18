@@ -2,12 +2,12 @@
 In-memory client configuration library for single-page web applications
 
 ```
-npm install @bradenhc/client-config
+npm i @bradenhc/client-config
 ```
 
 ## Usage
 
-The `client-config` library uses the `fetch()` API to retrieve configuration from your server for your web application. The asynchrounous request to load the configuration is done using the `ClientConfig.load()` function and only happens when you explicitly call the function in your application.
+The `client-config` library uses the `fetch()` API to retrieve configuration from your server for your web application. The asynchrounous request to load the configuration is done using the `ClientConfig#load()` function and only happens when you explicitly call the function in your application.
 
 Assume we have the following configuration located in `/assets/config/default.json` on our server:
 
@@ -51,18 +51,18 @@ Once the configuration has been loaded, the `ClientConfig.loaded` flag will be s
 
 The configuration library supports nested member access. When using `get()`, nested values can be retrieved by a period-delimited string of the keys. Setting nested values can be achieved in the same way. If a nested key does not exist, the library will create an empty object to hold the new key, automatically generating the nested structure.
 
-## Config Files
+The `set()` function only changes the values of the configuration in memory.
 
-The library uses the array set at `ClientConfig.files` to fetch configuration for the application. By default, only two entries exists in the array:
-- `/assets/config/default.json`
-- `/assets/config/local.json` 
-More entries can be added to the array using the `push()` function, or the array can be reassigned.
+## Config Files
+By default, the library does not have any config files to load. In order to set the files to load you must call the `files()` function. Currently there is no guarantee that the files will be loaded in the order you specify, as all requests are done asynchronously.
 
 ```js
 import config from 'client-config';
 
 // Set the files to use when loading configuration
 config.files([
+    "/assets/config/default.json",
+    "/assets/config/local.json",
     "/assets/config/production.json",
     "/assets/config/security.json"
 ]);
@@ -71,4 +71,4 @@ config.files([
 config.files().push("/assets/config/test.json");
 ```
 
-These files will be fetched when `load()` is called.
+As seen in the example, you must pass an array of strings to the `files()` function to set the files to load. Calling `files()` without any arguments will return the current array of files the `client-config` module is is set to load. These files will be fetched when `load()` is called.
