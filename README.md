@@ -1,4 +1,5 @@
 # client-config
+
 In-memory client configuration library for single-page web applications
 
 ```
@@ -27,8 +28,12 @@ The library can be used in the following way:
 ```js
 import config from 'client-config';
 
-config.load(err => {
-    if(err) return console.log(err);
+// Specify which JSON files to load as config
+config.files(['/assets/config/default.json']);
+
+// Load the files
+config.load(errs => {
+    if (errs) return console.log(errs);
 
     // Returns the value 'v1.0.0'
     let version = config.get('version');
@@ -54,6 +59,7 @@ The configuration library supports nested member access. When using `get()`, nes
 The `set()` function only changes the values of the configuration in memory.
 
 ## Config Files
+
 By default, the library does not have any config files to load. In order to set the files to load you must call the `files()` function. Currently there is no guarantee that the files will be loaded in the order you specify, as all requests are done asynchronously.
 
 ```js
@@ -61,14 +67,27 @@ import config from 'client-config';
 
 // Set the files to use when loading configuration
 config.files([
-    "/assets/config/default.json",
-    "/assets/config/local.json",
-    "/assets/config/production.json",
-    "/assets/config/security.json"
+    '/assets/config/default.json',
+    '/assets/config/local.json',
+    '/assets/config/production.json',
+    '/assets/config/security.json'
 ]);
 
 // Add another file
-config.files().push("/assets/config/test.json");
+config.files().push('/assets/config/test.json');
 ```
 
 As seen in the example, you must pass an array of strings to the `files()` function to set the files to load. Calling `files()` without any arguments will return the current array of files the `client-config` module is is set to load. These files will be fetched when `load()` is called.
+
+## Errors
+
+If the libary is unable to load any of the config files specified, it will return a list of the files as the first argument to the callback function provided to `load()`. The returned errors will have the following format:
+
+```js
+errs = [
+    { 
+        message: 'Message describing the issue', 
+        file: 'the-file-that-triggered-the-error' 
+    }
+];
+```

@@ -1,5 +1,5 @@
 function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
+    return item && typeof item === 'object' && !Array.isArray(item);
 }
 
 function mergeDeep(target, ...sources) {
@@ -26,23 +26,22 @@ export class ClientConfig {
     }
 
     load(cb) {
-        let called = false;
         let pending = this._files.length;
+        let warnings = [];
         this._files.forEach(file => {
             fetch(file)
                 .then(res => res.json())
                 .then(data => {
                     this._config = mergeDeep(this._config, data);
                     this.loaded = true;
-                    if (!--pending && !called) {
-                        called = true;
-                        cb();
+                    if (!--pending) {
+                        cb(warnings.length === 0 ? null : warnings);
                     }
                 })
                 .catch(err => {
-                    if (!called) {
-                        called = true;
-                        cb(new Error('Failed to load config: ' + err.message));
+                    warnings.push({ message: `Could not load config file`, file });
+                    if (!--pending) {
+                        cb(warnings);
                     }
                 });
         });
